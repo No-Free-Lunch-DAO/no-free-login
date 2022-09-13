@@ -1,10 +1,10 @@
-import "./App.css";
+import "./metamask.css";
 import { useState, useEffect } from "react";
 import Web3 from "web3";
 
 function App() {
   const [web3, setWeb3] = useState();
-  const [account, setAccount] = useState('');
+  const [accountMetamask, setAccountMetamask] = useState("");
 
   useEffect(() => {
     if (typeof window.ethereum !== "undefined") {
@@ -17,20 +17,19 @@ function App() {
     }
   }, []);
 
-  const connectWallet = async () => {
-  let accounts = await window.ethereum.request({
+  const connectMetamask = async () => {
+  let accountsForMeta = await window.ethereum.request({
      method: "eth_requestAccounts",
   });
-     setAccount(accounts[0]);
+     setAccountMetamask(accountsForMeta[0]);
   };
 
   return (
     <div className="App">
-      <button className="metaConnect" onClick={() => { connectWallet() }}>
-        Connect to MetaMask
+      <button className="metaConnect" onClick={() => { connectMetamask() }}>
+        메타마스크 지갑 연결
       </button>
-
-      <div className="userInfo">주소: {account}</div>
+      <div className="userInfo">Metamask: {accountMetamask}</div>
     </div>
   );
 }
