@@ -1,12 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
+import KaikasWallet from "./KaikasWallet";
 import MetamaskWallet from "./MetamaskWallet";
-//import KaikasWallet from "./KaikasWallet";
 
 ReactDOM.render(
   <React.StrictMode>
     <MetamaskWallet />
+    <KaikasWallet />
   </React.StrictMode>,
   document.getElementById("root")
 );

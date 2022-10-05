@@ -1,33 +1,43 @@
 import Caver from "caver-js";
-import { klaytn } from "caver-js";
 import "./kaikas.css";
-//import { useState, useEffect } from "react";
+import { useEffect } from "react";
 
-const caver = new Caver(klaytn);
-
-function kaikasApp() {
-
-    const connectKaikas = async () => {
-        if(typeof window.klaytn !== "undefined") {
-            const provideKaikas = window["klaytn"];
-        }
-        try {
-            const accounts = await window.klaytn.enable();
-            const account = window.klaytn.selectedAddress;
-    
-            const connectCaver = new Caver(window.klaytn);
-            const getBalanceAccount = await caver.klay.getBalance(account);
-        } catch(error) {
-            console.error(error);
-        }
+function KaikasWallet(){
+  useEffect(() => {
+    if(typeof window.klaytn !== "undefined") {
+      const provider = window["klaytn"];
+      try {
+        const accounts = window.klaytn.enable();
+        const account = window.klaytn.selectedAddress;
+        console.log(`this->`, account);
+        
+        const caver = new Caver(window.klaytn);
+        const balance = caver.klay.getBalance(account);
+      } catch(err) {
+          console.error(err);
+      }
     }
-    return (
-        <div className="App">
-          <button className="metaConnect" onClick={() => { connectKaikas() }}>
-            카이카스 지갑 연결
-          </button>
-        </div>
-      );
+  })
+  
+  async function connectKaikas() {
+    await window.klaytn.on("accountsChanged", function(accounts) {
+      accounts = window.klaytn.enable();
+    })
+  };
+  
+  async function checkWallet() {
+    console.log(await window.klaytn._kaikas.isUnlocked());
+  }
+
+  return (
+    <div className="App">
+      <button className="kaiConnect" onClick={() => { connectKaikas()}}>
+        Connect with Kaikas
+      </button>
+      <div className="userInfos">Kaikas: {window.klaytn.selectedAddress}</div>
+    </div>
+);
 }
 
-export default kaikasApp();
+
+export default KaikasWallet;

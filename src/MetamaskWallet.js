@@ -8,8 +8,7 @@ function App() {
 
   useEffect(() => {
     if (typeof window.ethereum !== "undefined") {
-      try {
-        const web = new Web3(window.ethereum);
+      try { const web = new Web3(window.ethereum);
         setWeb3(web);
       } catch (err) {
             console.log(err);
@@ -35,3 +34,4 @@ function App() {
 }
 
 export default App;
+
